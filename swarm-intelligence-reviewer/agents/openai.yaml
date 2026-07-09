@@ -1,0 +1,4 @@
+interface:
+  display_name: "Swarm Intelligence Reviewer"
+  short_description: "Review manuscripts like a Swarm Intelligence journal referee."
+  default_prompt: "Review this manuscript as if you were a rigorous Swarm Intelligence journal referee. Prioritize novelty, experimental support, mechanism-level explanation, statistical validity, and scope claims."

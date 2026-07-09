@@ -1,0 +1,4 @@
+interface:
+  display_name: "Equation Traceability Workflow"
+  short_description: "Maintain equation-to-code traceability"
+  default_prompt: "Use $equation-traceability-workflow to update equation traceability across the thesis workspace."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Oracle Prompt Design"
+  short_description: "Design high-signal Oracle prompts"
+  default_prompt: "Use $oracle-prompt-design to prepare a precise Oracle prompt and attachment plan for this review."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Android Local-First MCP"
+  short_description: "Kotlin Android local-first MCP architecture"
+  default_prompt: "Use $android-local-first-mcp to implement and verify a local-first Kotlin Android MCP integration."

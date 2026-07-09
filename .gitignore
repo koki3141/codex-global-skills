@@ -1,0 +1,29 @@
+.DS_Store
+
+# System/bundled skills and generated plugin material are managed outside this repo.
+.system/
+
+# Historical snapshots are intentionally kept out of the active skills repo.
+# Backup entrypoints must remain SKILL.snapshot.md, not SKILL.md.
+backup/
+
+# Runtime logs, caches, and transient review-loop state.
+*.log
+*.tmp
+*.bak
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.oracle-review-loop/
+.oracle-review-loop-state.json
+
+# Local environment and secrets.
+.env
+.env.*
+*.pem
+*.key
+*token*
+*secret*
+secrets-store/

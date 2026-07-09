@@ -1,0 +1,4 @@
+interface:
+  display_name: "User Custom Settings"
+  short_description: "Apply the user's output preferences"
+  default_prompt: "Use $user-custom-settings for this answer."

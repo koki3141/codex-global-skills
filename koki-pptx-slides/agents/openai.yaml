@@ -1,0 +1,4 @@
+interface:
+  display_name: "Koki PPTX Slides"
+  short_description: "Koki-style dense PPTX research slides"
+  default_prompt: "Use $koki-pptx-slides to create a dense, source-backed research PPTX in my slide style."

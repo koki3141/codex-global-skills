@@ -1,0 +1,4 @@
+interface:
+  display_name: "Research Design Generator"
+  short_description: "Convert research ideas into rigorous study designs"
+  default_prompt: "Use $research-design-generator to convert this rough research idea into a publishable research design."

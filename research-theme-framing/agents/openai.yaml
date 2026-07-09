@@ -1,0 +1,4 @@
+interface:
+  display_name: "Research Theme Framing"
+  short_description: "Frame research themes into testable claims"
+  default_prompt: "Use $research-theme-framing to turn this rough research theme into a testable problem, hypothesis, and next design step."
