@@ -6,6 +6,11 @@ This directory is managed as a local Git repository for user-maintained global
 Codex skills. It is intentionally separate from any project-local `.agents/skills`
 directory.
 
+Public ChatGPT Web index:
+
+- [ChatGPT Global Skill Index](https://github.com/koki3141/codex-global-skills/blob/main/chatgpt-global-skill-index.md)
+- [raw Markdown](https://raw.githubusercontent.com/koki3141/codex-global-skills/main/chatgpt-global-skill-index.md)
+
 Repository scope:
 
 - Track active user-maintained global skills under top-level skill directories.
@@ -35,3 +40,9 @@ Suggested Git workflow:
 2. Validate the changed skill.
 3. Review `git status --short` and stage only related files.
 4. Commit with a focused message.
+
+After adding, removing, or renaming a skill, regenerate the public index:
+
+```bash
+python3 scripts/generate-chatgpt-global-skill-index.py
+```
