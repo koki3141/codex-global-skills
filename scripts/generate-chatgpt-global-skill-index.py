@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from datetime import date
 from pathlib import Path
 
 
@@ -54,9 +55,10 @@ def render() -> str:
         )
 
     table_rows = "\n".join(rows)
+    generated_date = date.today().isoformat()
     return f"""---
 title: ChatGPT Global Skill Index
-date: 2026-07-09
+date: {generated_date}
 tags:
   - status/evergreen
   - type/index
@@ -74,6 +76,7 @@ raw_url: https://raw.githubusercontent.com/koki3141/codex-global-skills/{BRANCH}
 ## 役割
 
 このファイルは、ChatGPT WebからグローバルCodex skillを参照するための公開索引である。
+`python3 scripts/generate-chatgpt-global-skill-index.py`から生成し、Skill一覧を手作業では編集しない。
 
 ## GitHubリンク
 
@@ -87,6 +90,7 @@ raw_url: https://raw.githubusercontent.com/koki3141/codex-global-skills/{BRANCH}
 3. ローカル実行、Git操作、CLI、ファイル編集が必要な手順は、実行したふりをしない。
 4. Webから読めないファイルや未公開ファイルが必要な場合は、必要な添付、コマンド、確認条件として明示する。
 5. 複数Skillが該当する場合は、最小セットを選び、適用順を短く示してから作業する。
+6. Codex組み込み機能またはOpenAI公式pluginで同じjobを満たせる場合は公式を優先し、custom profileはユーザー固有差分だけに使う。
 
 ## Skill一覧
 
