@@ -1,6 +1,6 @@
 ---
 name: session-wrap-up
-description: Generate session work log, check for AGENTS.md updates, and clean up temporary files. Replaces session-summary and stop-summary hooks.
+description: Generate a session work log, check whether AGENTS.md needs updates, report temporary-file cleanup candidates, and summarize Git state when the user asks to wrap up or end a session. Complements Codex native lifecycle hooks rather than emulating them.
 metadata:
   tags: [Workflow, Session, Productivity]
 ---
@@ -18,13 +18,7 @@ Trigger this skill when:
 
 ## Instructions
 
-If available in the current repo, first run:
-
-```bash
-python3 scripts/codex_hook_emulation.py session-end --cwd "$PWD"
-```
-
-Use that output as the deterministic Codex substitute for a `SessionEnd` / `Stop` hook before writing the final human-readable summary.
+Treat Codex native `Stop` hooks as the lifecycle extension point. Do not call a repository-local hook emulator. This skill owns the human-readable summary and read-only cleanup review; native hooks own configured deterministic command handlers.
 
 ### 1. Generate Work Log
 

@@ -49,16 +49,16 @@ The public index is now generated from top-level active `*/SKILL.md` files. A Gi
 
 ## Migrate to current official plugins
 
-These local skills substantially overlap a current skill distributed through the OpenAI plugin marketplace. They are retained temporarily only to avoid a capability gap before local plugin installation is confirmed.
+These local skills substantially overlap a current skill distributed through the OpenAI plugin marketplace. The Mac-side installation and discovery smoke test completed on 2026-07-11 for GitHub, Notion, Cloudflare, and Superpowers. The corresponding GitHub, Notion, and Cloudflare fallback entrypoints were retired. `chatgpt-apps` remains because `openai-developers` is not present in the current configured marketplace snapshot.
 
 | Local skill | Official plugin / skill | Assessment | Migration rule |
 | --- | --- | --- | --- |
-| `chatgpt-apps` | `openai-developers` / `build-chatgpt-app` | Near byte-for-byte functional duplicate with a different name. | Install official plugin, run scaffold and review smoke tests, then retire local entrypoint. |
-| `gh-address-comments` | `github` / `gh-address-comments` | Official version is newer and adds connector-plus-GraphQL thread handling and write safety. | Replace with official. Do not maintain the older local copy. |
-| `gh-fix-ci` | `github` / `gh-fix-ci` | Official version includes current GitHub app integration and stronger residual-risk handling. | Replace with official. |
-| `notion-research-documentation` | `notion` / same name | Official marketplace contains the same job. | Replace unless a concrete Obsidian/Notion-specific user delta is documented. |
-| `notion-spec-to-implementation` | `notion` / same name | Official marketplace contains the same job. | Replace unless a concrete user workflow delta is documented. |
-| `cloudflare-deploy` | `cloudflare` / `cloudflare` | Official plugin is broader and explicitly docs-first across Workers, Pages, storage, AI, networking, security, and IaC. | Install official plugin and retire the narrow local deployment copy after smoke testing. |
+| `chatgpt-apps` | `openai-developers` / `build-chatgpt-app` | Near byte-for-byte functional duplicate with a different name, but no current marketplace replacement was found locally. | Retain until the official plugin is available and passes scaffold and review smoke tests. |
+| `gh-address-comments` | `github` / `gh-address-comments` | Official version is newer and adds connector-plus-GraphQL thread handling and write safety. | Retired after official plugin discovery passed. |
+| `gh-fix-ci` | `github` / `gh-fix-ci` | Official version includes current GitHub app integration and stronger residual-risk handling. | Retired after official plugin discovery passed. |
+| `notion-research-documentation` | `notion` / same name | Official marketplace contains the same job. | Retired after official plugin discovery passed. |
+| `notion-spec-to-implementation` | `notion` / same name | Official marketplace contains the same job. | Retired after official plugin discovery passed. |
+| `cloudflare-deploy` | `cloudflare` / `cloudflare` | Official plugin is broader and explicitly docs-first across Workers, Pages, storage, AI, networking, security, and IaC. | Retired after official plugin discovery passed. |
 
 ### No-gap migration sequence
 
@@ -66,7 +66,7 @@ Do not delete these entrypoints before local Codex confirms the official plugin 
 
 ```text
 1. Open /plugins in Codex CLI.
-2. Install openai-developers, github, notion, cloudflare, and superpowers as needed.
+2. Install the available official replacement plugin.
 3. Restart Codex.
 4. Run one representative task per replacement.
 5. Remove the corresponding legacy global entrypoint.
@@ -169,7 +169,9 @@ Before materially editing any retained skill, re-run the official-first check fr
 - regenerated chatgpt-global-skill-index.md without stale rows;
 - added automatic index refresh through GitHub Actions;
 - updated the Obsidian official-first audit and engineering review stack notes;
-- retained official-plugin duplicates only as no-gap fallbacks pending local smoke tests.
+- installed and discovery-smoke-tested the official GitHub, Notion, Cloudflare, and Superpowers plugins on the Mac;
+- retired the five replaced GitHub, Notion, and Cloudflare fallback entrypoints;
+- retained `chatgpt-apps` because the expected `openai-developers` plugin is absent from the current marketplace snapshot.
 ```
 
 ## Local actions still required
@@ -177,9 +179,8 @@ Before materially editing any retained skill, re-run the official-first check fr
 GitHub is the source repository, but plugin and CLI installation occur on the user's machine.
 
 ```text
-- pull the global skill repository into ~/.codex/skills;
-- install and smoke-test official plugins through /plugins;
 - install the pinned Orchestrator CLI only after reviewing its package and Node/Nix impact;
+- authenticate plugin connectors only when a real task requires them; discovery alone does not establish connector authorization;
 - run quick_validate.py for changed skills;
 - remove legacy official-duplicate entrypoints only after replacement tests pass.
 ```
