@@ -15,6 +15,7 @@
 - 公式pluginを拡張する必要がある場合、公式skillと異なるnameの薄いprofileにし、ユーザー固有の差分だけを保持すること。
 - 公式skillと同名のcustom global skillを維持しないこと。
 - custom skillを保持する理由は、user-specificなprivacy、evidence、cost、approval、rollback、deterministic tooling、domain rule、cross-provider capabilityのいずれかとして説明できなければならない。
+- Codex native hookで実現できる処理をmanual hook-emulation skillとして再実装しないこと。
 - 詳細は`OFFICIAL_FIRST.md`に従うこと。
 
 ## 3. グローバルskillのGit管理
@@ -26,4 +27,4 @@
 - plugin由来のskillはplugin managerに所有させ、このrepoへcopyしないこと。
 - skillのstructure、YAML、local referenceを検証した後、正本側のGit repositoryで対象skillと直接関係するgovernance fileだけをcommitすること。
 - ユーザーがcommitまたはpushを不要と明示した場合を除き、skillの作成・変更、検証、commit、pushを同じ作業単位で完了すること。
-- skillを追加、削除、renameした場合は`chatgpt-global-skill-index.md`を再生成すること。
+- skillを追加、削除、renameした場合は、`refresh-skill-index.yml`が生成indexを更新したことを確認すること。workflowを使えない場合だけ`python3 scripts/generate-chatgpt-global-skill-index.py`を手動実行すること。
