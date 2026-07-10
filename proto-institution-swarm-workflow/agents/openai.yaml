@@ -1,4 +1,0 @@
-interface:
-  display_name: "Proto Institution Swarm Workflow"
-  short_description: "Plan, review, and validate this research repo"
-  default_prompt: "Use $proto-institution-swarm-workflow to plan and validate a commit-by-commit research implementation in proto-institution-swarm."
