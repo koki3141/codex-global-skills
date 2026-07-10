@@ -1,0 +1,45 @@
+name: Refresh global skill index
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "*/SKILL.md"
+      - "scripts/generate-chatgpt-global-skill-index.py"
+      - ".github/workflows/refresh-skill-index.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-global-skill-index
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate index
+        run: python3 scripts/generate-chatgpt-global-skill-index.py
+
+      - name: Commit generated index
+        shell: bash
+        run: |
+          if git diff --quiet -- chatgpt-global-skill-index.md; then
+            echo "Index is already current."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add chatgpt-global-skill-index.md
+          git commit -m "docs: グローバルSkill索引を再生成"
+          git push
