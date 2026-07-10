@@ -1,4 +1,4 @@
 interface:
   display_name: "Research Design Generator"
-  short_description: "Convert research ideas into rigorous study designs"
-  default_prompt: "Use $research-design-generator to convert this rough research idea into a publishable research design."
+  short_description: "Decide a research theme and complete visual experiment design"
+  default_prompt: "Use $research-design-generator and follow references/visual-experiment-prompt.md to decide one research theme, finalize the experiment design, and create the actual field diagram, rendered equations, and regeneration code."
