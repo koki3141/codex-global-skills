@@ -47,6 +47,9 @@ Include both tasks where delegation should trigger and tasks where it should not
 - model or credit spend;
 - tool/API/GPU cost;
 - number of agents, retries, and repeated context reconstruction.
+- Cost per Accepted Result, including failed attempts and escalation;
+- human-review and rework cost kept separate from provider charges;
+- benchmark Cost per Task and subscription allowances reported as distinct contextual measures, not substitutes for observed workflow cost.
 
 ### Coordination and rework
 
