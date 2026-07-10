@@ -43,7 +43,7 @@ When maintaining personal global skills in `~/.codex/skills` or `~/.agents/skill
 5. A source skill and an installed runtime copy may coexist only when ownership is documented and their managed files are byte-identical. Do not maintain two independently editable copies.
 6. Validate every changed skill with `quick_validate.py`. If `PyYAML` is unavailable, use the existing `uv run --no-sync --with PyYAML ... quick_validate.py <skill-dir>` path.
 7. After creating or changing a global or project-local skill, commit the validated source-of-truth files in their owning Git repository before finishing, unless the user explicitly says not to commit. Stage only the skill and directly related governance files; preserve unrelated worktree changes.
-8. Use a Conventional Commits message for the skill commit. Do not push unless the user explicitly requests a push.
+8. Use a Conventional Commits message for the skill commit and push the resulting branch to its configured remote by default. Skip commit or push only when the user explicitly requests that omission.
 9. If a changed `~/.agents/skills/` copy has no identified source, stop treating it as canonical: classify its scope, copy it to the appropriate Git-managed source location, verify byte identity, and commit that source.
 
 ## Default workflow
@@ -129,7 +129,8 @@ After validation:
 3. Confirm any installed copy is byte-identical to the source where applicable.
 4. Stage only the skill source and directly related governance or handoff files.
 5. Commit with a Conventional Commits message such as `chore(skills): track <workflow>` or `docs(skills): update <workflow>`.
-6. Verify the commit and remaining worktree state. Leave the branch unpushed unless push was requested.
+6. Push the current branch to its configured remote unless the user explicitly said not to push.
+7. Verify the local commit, remote branch tip, and remaining worktree state.
 
 Do not finish with a newly created or modified global skill existing only under an untracked `~/.agents/skills/` directory.
 
@@ -157,6 +158,7 @@ When creating or repairing a skill, prefer ending with:
 - which files were created or updated,
 - what integrity checks were run,
 - which source repository and commit contain the skill,
+- which remote branch received the commit,
 - what still needs manual follow-up, if anything.
 
 ## References
