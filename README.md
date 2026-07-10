@@ -63,6 +63,9 @@ Do not track:
   remain the default for same-provider work.
 - `cost-aware-subagents/` decides whether delegation is economically and
   operationally justified; it does not replace native subagent mechanics.
+- Use current Codex lifecycle hooks directly. Do not restore a manual
+  `codex-hook-emulation` skill; put any user-specific behavior in a native hook
+  handler.
 - Adapted upstream skills keep a source pin, local-difference notes, and the
   applicable upstream license inside the skill directory.
 - A current official marketplace skill is not copied here. A temporary fallback
@@ -99,7 +102,9 @@ Then:
 4. commit with an English prefix and Japanese message;
 5. push unless the user explicitly requests otherwise.
 
-After adding, removing, or renaming a skill, regenerate the public index:
+The public index is generated from active top-level `*/SKILL.md` files. The
+`refresh-skill-index.yml` workflow regenerates and commits it after a skill
+entrypoint is added, changed, or deleted. For local/manual recovery only, run:
 
 ```bash
 python3 scripts/generate-chatgpt-global-skill-index.py
