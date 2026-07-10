@@ -1,0 +1,6 @@
+interface:
+  display_name: "Cost-aware subagents"
+  short_description: "Delegate independent work while bounding cost and review overhead"
+  default_prompt: "Use $cost-aware-subagents to decide whether this task benefits from bounded subagent delegation, then execute and verify the smallest adequate workflow."
+policy:
+  allow_implicit_invocation: false
