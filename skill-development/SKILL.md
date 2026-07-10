@@ -36,9 +36,15 @@ When maintaining personal global skills in `~/.codex/skills` or `~/.agents/skill
    - local: depends on vault paths, project structure, or private data,
    - plugin/runtime: supplied by an installed bundle and not hand-maintained here.
 3. Prefer neutral, reusable names such as `user-custom-settings`, `oracle-prompt-design`, or `research-design-generator`. Avoid user-specific branding in visible labels.
-4. Keep one source of truth. Do not keep the same skill name in both a global skill root and a repository-local `.agents/skills/` tree.
-5. Validate every changed skill with `quick_validate.py`. If `PyYAML` is unavailable, use the existing `uv run --no-sync --with PyYAML ... quick_validate.py <skill-dir>` path.
-6. Treat `~/.codex/skills` and `~/.agents/skills` as user configuration, not the current repository. Commit only when the changed skill directory itself is inside a Git repository; otherwise report the exact paths changed and the validation result.
+4. Keep one source of truth and classify it before editing:
+   - reusable global skill: `~/.codex/skills/<skill-name>/`, which is the Git-managed global source repository;
+   - project-specific skill: `<project>/.agents/skills/<skill-name>/` in the owning Git repository;
+   - installed runtime copy: `~/.agents/skills/<skill-name>/`, synchronized from its source of truth.
+5. A source skill and an installed runtime copy may coexist only when ownership is documented and their managed files are byte-identical. Do not maintain two independently editable copies.
+6. Validate every changed skill with `quick_validate.py`. If `PyYAML` is unavailable, use the existing `uv run --no-sync --with PyYAML ... quick_validate.py <skill-dir>` path.
+7. After creating or changing a global or project-local skill, commit the validated source-of-truth files in their owning Git repository before finishing, unless the user explicitly says not to commit. Stage only the skill and directly related governance files; preserve unrelated worktree changes.
+8. Use a Conventional Commits message for the skill commit. Do not push unless the user explicitly requests a push.
+9. If a changed `~/.agents/skills/` copy has no identified source, stop treating it as canonical: classify its scope, copy it to the appropriate Git-managed source location, verify byte identity, and commit that source.
 
 ## Default workflow
 
@@ -114,6 +120,19 @@ At minimum, verify:
 - `SKILL.md` is not overloaded with material that belongs in references,
 - temporary logs, caches, and editor artifacts are not left inside the skill directory.
 
+### 7. Commit the skill source
+
+After validation:
+
+1. Resolve the source repository with `git -C <skill-source> rev-parse --show-toplevel`.
+2. Inspect `git status` and `git diff` in that repository.
+3. Confirm any installed copy is byte-identical to the source where applicable.
+4. Stage only the skill source and directly related governance or handoff files.
+5. Commit with a Conventional Commits message such as `chore(skills): track <workflow>` or `docs(skills): update <workflow>`.
+6. Verify the commit and remaining worktree state. Leave the branch unpushed unless push was requested.
+
+Do not finish with a newly created or modified global skill existing only under an untracked `~/.agents/skills/` directory.
+
 ## Typical repair patterns
 
 ### When the skill is too long
@@ -137,6 +156,7 @@ When creating or repairing a skill, prefer ending with:
 - what changed,
 - which files were created or updated,
 - what integrity checks were run,
+- which source repository and commit contain the skill,
 - what still needs manual follow-up, if anything.
 
 ## References
