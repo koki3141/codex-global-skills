@@ -1,0 +1,4 @@
+interface:
+  display_name: "Orchestrator"
+  short_description: "Run durable cross-provider agent tasks safely"
+  default_prompt: "Use $orchestrator only when this task requires cross-provider or durable background execution beyond native Codex subagents. Apply the read-only pilot safety profile."
