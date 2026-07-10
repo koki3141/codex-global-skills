@@ -24,6 +24,14 @@ Repository scope:
 Current conventions:
 
 - `koki-pptx-slides/` is the canonical personal PPTX research-slide skill.
+- `superpowers/` is the local Codex compatibility profile for design-first,
+  plan-driven, test-first, independently reviewed software changes. It is not
+  the official plugin runtime and does not emulate SessionStart hooks.
+- `agent-arena/` is the evidence-first heterogeneous review escalation for
+  consequential and contested or verifiable decisions. It is not a default
+  step for routine changes.
+- Adapted upstream skills keep their source pin, local-difference notes, and
+  upstream license inside the skill directory.
 - `backup/` stores historical snapshots only. Backup entrypoints are named
   `SKILL.snapshot.md` so stale copies do not appear as callable skills.
 - Extra frontmatter such as `version`, `tags`, `author`, and `dependencies`
