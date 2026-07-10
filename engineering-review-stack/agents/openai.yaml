@@ -1,0 +1,4 @@
+interface:
+  display_name: "Engineering Review Stack"
+  short_description: "Apply official Superpowers with user-specific gates"
+  default_prompt: "Use $engineering-review-stack to apply official Superpowers as the baseline, then add the user's evidence, cost, independent-review, and completion gates only where needed."
