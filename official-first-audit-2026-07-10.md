@@ -12,7 +12,8 @@ KEEP_OFFICIAL_WRAPPER  keep a thin, differently named user profile over official
 MIGRATE_TO_OFFICIAL    install and validate the official plugin, then retire the local entrypoint
 MOVE_PROJECT_LOCAL     move to the owning repository's .agents/skills
 CONSOLIDATE            merge overlapping user skills before deleting any capability
-REVIEW                 retain temporarily; deeper task-level comparison required
+RETIRE                  remove because a current official capability now supplies the job
+REVIEW                  retain temporarily; deeper task-level comparison required
 ```
 
 ## Applied in this audit
@@ -35,6 +36,16 @@ REVIEW                 retain temporarily; deeper task-level comparison required
 | --- | --- | --- |
 | `equation-traceability-workflow` | `Fujisawa-lab-inside/masters-thesis-shimohara-2027/.agents/skills/` | Hard-coded thesis workspace, submodules, EQ IDs, Sphinx paths, and build commands are repository-specific. |
 | `proto-institution-swarm-workflow` | `koki3141/proto-institution-swarm/.agents/skills/` | Hard-coded C-PME/EIGI/IVP architecture, experiment manifest, artifact, paper, and claim-boundary rules are repository-specific. |
+
+### RETIRE — replaced by a current Codex built-in
+
+| Skill | Decision | Replacement |
+| --- | --- | --- |
+| `codex-hook-emulation` | RETIRE | Current Codex lifecycle hooks provide native `SessionStart`, `PreToolUse`, `PostToolUse`, `Stop`, and related event handling. The manual emulation entrypoint and its references/examples were removed. Any future Obsidian-specific behavior should be implemented as a native hook handler, not by restoring the emulator. |
+
+### Generated index maintenance
+
+The public index is now generated from top-level active `*/SKILL.md` files. A GitHub Actions workflow runs the generator after a skill entrypoint is added, changed, or deleted. This removed stale rows such as `codex-hook-emulation` and prevents future manual drift.
 
 ## Migrate to current official plugins
 
@@ -59,7 +70,7 @@ Do not delete these entrypoints before local Codex confirms the official plugin 
 3. Restart Codex.
 4. Run one representative task per replacement.
 5. Remove the corresponding legacy global entrypoint.
-6. Regenerate chatgpt-global-skill-index.md.
+6. Confirm the generated public index changed in the follow-up Actions commit.
 ```
 
 ## Keep because the user contract is materially stronger
@@ -151,17 +162,26 @@ All other active skills remain `KEEP_CUSTOM` or `REVIEW` for now. This is not a 
 
 Before materially editing any retained skill, re-run the official-first check from `OFFICIAL_FIRST.md`.
 
-## Local actions still required
-
-GitHub is the source repository, but plugin installation and CLI installation occur on the user's machine.
+## Completed follow-up
 
 ```text
+- removed the obsolete codex-hook-emulation entrypoint and supporting files;
+- regenerated chatgpt-global-skill-index.md without stale rows;
+- added automatic index refresh through GitHub Actions;
+- updated the Obsidian official-first audit and engineering review stack notes;
+- retained official-plugin duplicates only as no-gap fallbacks pending local smoke tests.
+```
+
+## Local actions still required
+
+GitHub is the source repository, but plugin and CLI installation occur on the user's machine.
+
+```text
+- pull the global skill repository into ~/.codex/skills;
 - install and smoke-test official plugins through /plugins;
 - install the pinned Orchestrator CLI only after reviewing its package and Node/Nix impact;
-- pull the global skill repository;
 - run quick_validate.py for changed skills;
-- regenerate the public index;
-- remove legacy official-duplicate entrypoints after replacement tests pass.
+- remove legacy official-duplicate entrypoints only after replacement tests pass.
 ```
 
 ## Review date
