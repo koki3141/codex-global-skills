@@ -1,6 +1,6 @@
 ---
 title: ChatGPT Global Skill Index
-date: 2026-07-10
+date: 2026-07-12
 tags:
   - status/evergreen
   - type/index
@@ -68,6 +68,7 @@ raw_url: https://raw.githubusercontent.com/koki3141/codex-global-skills/main/cha
 | `kaggle-learner` | This skill should be used when the user asks to "learn from Kaggle", "study Kaggle solutions", "analyze Kaggle competitions", "learn from code", "extract patterns", or mentions Kaggle competition URLs. Also covers extracting reusable patterns from coding sessions. | [SKILL.md](https://github.com/koki3141/codex-global-skills/blob/main/kaggle-learner/SKILL.md) |
 | `koki-pptx-slides` | This skill should be used when creating, revising, or reviewing the user's personal PowerPoint/PPTX research slides, especially high-density Japanese lab-briefing, ROBOMECH-style, thesis, proposal, or source-backed technical decks. | [SKILL.md](https://github.com/koki3141/codex-global-skills/blob/main/koki-pptx-slides/SKILL.md) |
 | `latex-conference-template-organizer` | Organize messy conference LaTeX template .zip files into clean Overleaf-ready structure. Use when the user asks to "organize LaTeX template", "clean up .zip template", or "prepare Overleaf submission template". | [SKILL.md](https://github.com/koki3141/codex-global-skills/blob/main/latex-conference-template-organizer/SKILL.md) |
+| `local-results-dashboard-packaging` | Package local experiment results into inspectable Markdown or HTML dashboards with working PNG, SVG, and MP4 media. Use when local result media must render in VS Code Markdown Preview, when a video shows 0:00, or when a dashboard must preserve run provenance. | [SKILL.md](https://github.com/koki3141/codex-global-skills/blob/main/local-results-dashboard-packaging/SKILL.md) |
 | `mcp-integration` | This skill should be used when the user asks to "add MCP server", "integrate MCP", "configure MCP in plugin", "use .mcp.json", "set up Model Context Protocol", "connect external service", mentions "${CLAUDE_PLUGIN_ROOT} with MCP", or discusses MCP server types (SSE, stdio, HTTP, WebSocket). Provides comprehensive guidance for integrating Model Context Protocol servers into Claude Code plugins for external tool and service integration. | [SKILL.md](https://github.com/koki3141/codex-global-skills/blob/main/mcp-integration/SKILL.md) |
 | `memory-updater` | Checks and updates CLAUDE.md memory file to stay in sync with changes to skills, commands, agents, and hooks. | [SKILL.md](https://github.com/koki3141/codex-global-skills/blob/main/memory-updater/SKILL.md) |
 | `ml-paper-writing` | Write publication-ready ML/AI papers for NeurIPS, ICML, ICLR, ACL, AAAI, COLM. Use when drafting papers from research repos, conducting literature reviews, finding related work, verifying citations, or preparing camera-ready submissions. Includes LaTeX templates, citation verification workflows, and paper discovery/evaluation criteria. | [SKILL.md](https://github.com/koki3141/codex-global-skills/blob/main/ml-paper-writing/SKILL.md) |
