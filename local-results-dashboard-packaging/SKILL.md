@@ -19,6 +19,9 @@ layer, not the raw research-data source of truth.
 - Copy only reviewed preview media into a dashboard-owned media directory.
 - Use relative paths inside the dashboard package so it remains movable.
 - Verify every referenced local file instead of trusting rendered placeholders.
+- Do not turn parameter lists or scalar summaries into SVG/PNG. Show important
+  values in a compact Markdown table and link the complete TOML configuration;
+  reserve figures for spatial, temporal, relational, or distributional data.
 
 ## VS Code Markdown Media
 
