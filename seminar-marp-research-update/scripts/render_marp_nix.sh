@@ -9,24 +9,44 @@ fi
 deck="$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"
 output_dir="$(mkdir -p "$2" && cd "$2" && pwd)"
 stem="$(basename "$deck" .md)"
-html="$output_dir/$stem.html"
-pdf="$output_dir/$stem.pdf"
-pages="$(mktemp -d "${TMPDIR:-/tmp}/marp-pages.XXXXXX")"
-trap 'rm -rf -- "$pages"' EXIT
+staging="$(mktemp -d "$output_dir/.${stem}.render.XXXXXX")"
+html="$staging/$stem.html"
+pdf="$staging/$stem.pdf"
+contact="$staging/$stem-contact-sheet.png"
+pages="$staging/pages"
+mkdir -p "$pages"
+trap 'rm -rf -- "$staging"' EXIT
 
 nix run nixpkgs#marp-cli -- "$deck" --html --allow-local-files -o "$html"
 nix run nixpkgs#marp-cli -- "$deck" --pdf --allow-local-files -o "$pdf"
-nix shell 'nixpkgs#poppler-utils' nixpkgs#imagemagick -c bash -c '
+fontconfig="$(nix build --no-link --print-out-paths nixpkgs#fontconfig.out)"
+font_root="$(nix build --no-link --print-out-paths nixpkgs#dejavu_fonts)"
+font="$font_root/share/fonts/truetype/DejaVuSans.ttf"
+nix shell 'nixpkgs#poppler-utils' nixpkgs#imagemagick nixpkgs#fontconfig -c bash -c '
   set -euo pipefail
   pdf="$1"
   pages="$2"
   contact="$3"
+  fontconfig="$4"
+  font="$5"
+  export FONTCONFIG_FILE="$fontconfig/etc/fonts/fonts/fonts.conf"
+  expected="$(pdfinfo "$pdf" | awk "\$1 == \"Pages:\" { print \$2 }")"
+  test -n "$expected"
   pdftoppm -png -r 100 "$pdf" "$pages/page" >/dev/null 2>&1
-  magick montage "$pages"/page-*.png -thumbnail 400x225 -tile 4x \
+  actual="$(find "$pages" -maxdepth 1 -name "page-*.png" | wc -l | tr -d " ")"
+  test "$actual" -eq "$expected"
+  magick montage "$pages"/page-*.png -font "$font" -thumbnail 400x225 -tile 4x \
     -geometry +8+8 -background "#d8d8d8" "$contact"
-' bash "$pdf" "$pages" "$output_dir/$stem-contact-sheet.png"
+' bash "$pdf" "$pages" "$contact" "$fontconfig" "$font"
 
 test -s "$html"
 test -s "$pdf"
-test -s "$output_dir/$stem-contact-sheet.png"
-printf '%s\n%s\n%s\n' "$html" "$pdf" "$output_dir/$stem-contact-sheet.png"
+test -s "$contact"
+
+final_html="$output_dir/$stem.html"
+final_pdf="$output_dir/$stem.pdf"
+final_contact="$output_dir/$stem-contact-sheet.png"
+mv -f -- "$html" "$final_html"
+mv -f -- "$pdf" "$final_pdf"
+mv -f -- "$contact" "$final_contact"
+printf '%s\n%s\n%s\n' "$final_html" "$final_pdf" "$final_contact"

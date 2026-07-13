@@ -21,9 +21,10 @@ description: Create or revise a Japanese research-seminar deck in Marp when the 
    - next decision and discussion questions.
 5. Use local figures that reveal the actual geometry, field, result, or workflow. Add a source/status caption. Do not use decorative stock images.
    - For Marp HTML, local MP4 evidence may be embedded with `<video controls playsinline>` when `html: true`. Always provide a local `poster` image because PDF export is static; verify the MP4 codec and the generated HTML source.
-6. Add concise speaker notes in Marp HTML comments. Keep the visible slide usable without narration.
-7. Run `scripts/render_marp_nix.sh DECK.md OUTPUT_DIR`. Inspect the generated contact sheet at full size, compare it with any supplied visual reference, then inspect any dense or suspicious page individually.
-8. Fix overflow, missing media, low contrast, tiny text, and unsupported claims. Rebuild until the rendered PDF is clean.
+6. Verify every displayed constant, equation, condition, run state, and result against the current code, test, config, manifest, or reviewed report that owns it. Do not copy a value from an older slide when the executable contract has changed.
+7. Add concise speaker notes in Marp HTML comments. Keep the visible slide usable without narration.
+8. Run `scripts/render_marp_nix.sh DECK.md OUTPUT_DIR`. Treat the Markdown source as canonical and regenerate HTML, PDF, and contact sheet together. Inspect the contact sheet at full size, compare it with any supplied visual reference, then inspect every dense or suspicious page individually.
+9. Fix overflow, missing media, low contrast, tiny text, source/render drift, and unsupported claims. Rebuild until the rendered PDF is clean. Preserve the last visually accepted artifacts if the renderer or host font stack fails.
 
 ## Content Rules
 
@@ -36,6 +37,7 @@ description: Create or revise a Japanese research-seminar deck in Marp when the 
 - For a major theme change, make the old-to-new distinction explicit on slide 2.
 
 Read `references/deck-contract.md` when choosing slide structure, evidence labels, and visual QA criteria.
+Read `references/source-render-sync.md` when updating an existing deck or committing generated review artifacts.
 
 ## Commands
 
