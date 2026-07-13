@@ -27,6 +27,25 @@
 
 ## Visual QA
 
+### Default thesis-seminar palette
+
+Unless the user explicitly requests another theme, preserve this hierarchy:
+
+| role | color |
+| --- | --- |
+| body and primary text | `#111111` |
+| top heading band | `#5b5b5b` |
+| heading inside the band | `#ffffff` |
+| subtitle, caption, page number | `#555555` |
+| table heading background/text | `#5b5b5b` / `#ffffff` |
+| completed status | `#176b4d` |
+| running status | `#4f4f4f` |
+| open status | `#8b3f18` |
+
+Do not recolor ordinary body text with status or accent colors. Use color to
+encode hierarchy or evidence state, and keep the visible wording understandable
+without color alone.
+
 When a screenshot or rendered reference is supplied, first record its observable
 layout features: top/bottom bands, content origin, outer margins, bullet glyphs,
 indent depth, title weight, dominant colors, and approximate density. Reproduce

@@ -1,0 +1,79 @@
+section {
+  font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", sans-serif;
+  color: #111111;
+  background: linear-gradient(to bottom, #5b5b5b 0, #5b5b5b 66px, #ffffff 66px, #ffffff 100%);
+  padding: 96px 58px 38px;
+  letter-spacing: 0;
+  position: relative;
+}
+
+section::after {
+  color: #4f4f4f;
+  font-size: 17px;
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: 0;
+}
+
+h1 {
+  color: #111111;
+  font-size: 42px;
+  margin: 0 0 22px;
+}
+
+h2 {
+  color: #ffffff;
+  font-size: 27px;
+  line-height: 1.25;
+  margin: 0;
+  position: absolute;
+  top: 16px;
+  left: 58px;
+  right: 58px;
+}
+
+h3 {
+  color: #222222;
+  font-size: 22px;
+}
+
+p,
+li {
+  color: #111111;
+  font-size: 22px;
+  line-height: 1.5;
+}
+
+.subtitle,
+.small,
+.source {
+  color: #555555;
+}
+
+th {
+  background: #5b5b5b;
+  color: #ffffff;
+}
+
+td {
+  background: #f3f3f3;
+  color: #111111;
+}
+
+.status-pass {
+  color: #176b4d;
+  font-weight: 700;
+}
+
+.status-run {
+  color: #4f4f4f;
+  font-weight: 700;
+}
+
+.status-open {
+  color: #8b3f18;
+  font-weight: 700;
+}
