@@ -1,0 +1,5 @@
+interface:
+  display_name: "Research Seminar Marp"
+  short_description: "研究方針変更を根拠付きのMarpゼミ資料へ構成する"
+  brand_color: "#333399"
+  default_prompt: "Use $seminar-marp-research-update to create a visually verified Marp deck for my next research seminar."

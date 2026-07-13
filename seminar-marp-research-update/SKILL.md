@@ -1,0 +1,45 @@
+---
+name: seminar-marp-research-update
+description: Create or revise a Japanese research-seminar deck in Marp when the user needs to explain a changed research theme, proposal, experiment design, or evidence status. Use repository sources of truth, optional PowerPoint THMX styling, local figures, claim-boundary labels, speaker notes, Nix-based HTML/PDF rendering, and all-slide visual QA.
+---
+
+# Research Seminar Marp
+
+## Workflow
+
+1. Read the project governance file and the canonical research source before drafting.
+2. Separate confirmed design, completed evidence, running work, and future work. Never present capability smoke or an active run as a scientific result.
+3. If a `.thmx` is supplied, run `scripts/extract_thmx_theme.py` and translate its color/font scheme into Marp CSS. Treat the theme as styling, not research evidence.
+4. Build the argument in this order:
+   - what changed and why;
+   - research gap and objective;
+   - causal chain;
+   - operational definitions and experimental separation;
+   - geometry, physics, controls, and primary endpoint;
+   - evidence status and claim boundary;
+   - next decision and discussion questions.
+5. Use local figures that reveal the actual geometry, field, result, or workflow. Add a source/status caption. Do not use decorative stock images.
+6. Add concise speaker notes in Marp HTML comments. Keep the visible slide usable without narration.
+7. Run `scripts/render_marp_nix.sh DECK.md OUTPUT_DIR`. Inspect the generated contact sheet at full size, then inspect any dense or suspicious page individually.
+8. Fix overflow, missing media, low contrast, tiny text, and unsupported claims. Rebuild until the rendered PDF is clean.
+
+## Content Rules
+
+- One message per slide; normally 12--16 slides for a 10--15 minute seminar.
+- Prefer a diagram, equation, table, or real result over paragraph-heavy prose.
+- Keep body text at 20 px or larger unless a source note requires smaller text.
+- Show equations only when the audience needs them for the decision being discussed.
+- Label evidence as `complete`, `running`, `capability only`, `open`, or `invalid`.
+- End with 2--3 concrete questions that the seminar can resolve.
+- For a major theme change, make the old-to-new distinction explicit on slide 2.
+
+Read `references/deck-contract.md` when choosing slide structure, evidence labels, and visual QA criteria.
+
+## Commands
+
+```bash
+python3 scripts/extract_thmx_theme.py /path/to/theme.thmx
+scripts/render_marp_nix.sh /absolute/path/deck.md /absolute/path/output
+```
+
+The renderer uses `nix run nixpkgs#marp-cli` and Nix-provided Poppler/ImageMagick. Do not silently fall back to host-global npm, Chromium, or PDF tools.
