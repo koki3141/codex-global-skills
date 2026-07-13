@@ -32,6 +32,14 @@ layout features: top/bottom bands, content origin, outer margins, bullet glyphs,
 indent depth, title weight, dominant colors, and approximate density. Reproduce
 those features before adding decorative components of your own.
 
+If the top band is the heading container, the heading text must render inside
+the band on every ordinary slide. An empty band combined with a duplicate
+bullet-style heading in the body fails the reference match.
+
+For local MP4 evidence, use an HTML `<video>` element only with a valid poster.
+The HTML build must retain the source path and controls; the PDF must show the
+poster without clipping. MP4 playback is an HTML deliverable, not a PDF claim.
+
 Reject the deck if any item is true:
 
 - clipped text, equation, table, or image;

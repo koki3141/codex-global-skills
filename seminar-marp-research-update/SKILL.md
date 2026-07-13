@@ -10,6 +10,7 @@ description: Create or revise a Japanese research-seminar deck in Marp when the 
 1. Read the project governance file and the canonical research source before drafting.
 2. Separate confirmed design, completed evidence, running work, and future work. Never present capability smoke or an active run as a scientific result.
 3. If a `.thmx` is supplied, run `scripts/extract_thmx_theme.py` and translate its color/font scheme into Marp CSS. If a rendered screenshot is also supplied, inspect it directly and reproduce its band height, whitespace, heading hierarchy, bullet shape, and alignment; do not stop at color/font extraction. Treat both inputs as styling, not research evidence.
+   - When the reference uses a top band as the slide heading region, place every slide heading inside that band. Do not duplicate it as a bullet-like heading in the body.
 4. Build the argument in this order:
    - what changed and why;
    - research gap and objective;
@@ -19,6 +20,7 @@ description: Create or revise a Japanese research-seminar deck in Marp when the 
    - evidence status and claim boundary;
    - next decision and discussion questions.
 5. Use local figures that reveal the actual geometry, field, result, or workflow. Add a source/status caption. Do not use decorative stock images.
+   - For Marp HTML, local MP4 evidence may be embedded with `<video controls playsinline>` when `html: true`. Always provide a local `poster` image because PDF export is static; verify the MP4 codec and the generated HTML source.
 6. Add concise speaker notes in Marp HTML comments. Keep the visible slide usable without narration.
 7. Run `scripts/render_marp_nix.sh DECK.md OUTPUT_DIR`. Inspect the generated contact sheet at full size, compare it with any supplied visual reference, then inspect any dense or suspicious page individually.
 8. Fix overflow, missing media, low contrast, tiny text, and unsupported claims. Rebuild until the rendered PDF is clean.
