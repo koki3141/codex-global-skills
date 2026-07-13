@@ -27,6 +27,11 @@
 
 ## Visual QA
 
+When a screenshot or rendered reference is supplied, first record its observable
+layout features: top/bottom bands, content origin, outer margins, bullet glyphs,
+indent depth, title weight, dominant colors, and approximate density. Reproduce
+those features before adding decorative components of your own.
+
 Reject the deck if any item is true:
 
 - clipped text, equation, table, or image;
