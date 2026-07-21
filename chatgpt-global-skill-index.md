@@ -1,6 +1,6 @@
 ---
 title: ChatGPT Global Skill Index
-date: 2026-07-21
+date: 2026-07-22
 tags:
   - status/evergreen
   - type/index
@@ -85,7 +85,7 @@ raw_url: https://raw.githubusercontent.com/koki3141/codex-global-skills/main/cha
 | `obsidian-project-memory` | This skill should be used when the user asks to maintain an Obsidian knowledge base for a research project, import an existing research repository into Obsidian, keep project memory or daily notes synchronized, summarize project context into durable notes, or update experiments, results, papers, writing, and plans in an Obsidian vault without requiring MCP. | [SKILL.md](https://github.com/koki3141/codex-global-skills/blob/main/obsidian-project-memory/SKILL.md) |
 | `obsidian-research-log` | Use this skill when the user is discussing daily research work, TODOs, plans, standups, meetings, milestones, or general project progress that should be reflected in Obsidian daily notes, plan notes, and hub updates. | [SKILL.md](https://github.com/koki3141/codex-global-skills/blob/main/obsidian-research-log/SKILL.md) |
 | `obsidian-synthesis-map` | Use this skill when generating higher-level synthesis notes such as literature reviews, comparison matrices, project summaries, or other cross-note summaries inside the project knowledge base. | [SKILL.md](https://github.com/koki3141/codex-global-skills/blob/main/obsidian-synthesis-map/SKILL.md) |
-| `oracle` | This skill should be used when running Oracle second-model reviews with bundled prompts and files, including browser-mode diagnosis, debugging, refactoring, and design checks. | [SKILL.md](https://github.com/koki3141/codex-global-skills/blob/main/oracle/SKILL.md) |
+| `oracle` | This skill should be used when running Oracle second-model reviews with bundled prompts and files, diagnosing browser mode, or sending an explicitly authorized message to a specific ChatGPT chat or Project URL. | [SKILL.md](https://github.com/koki3141/codex-global-skills/blob/main/oracle/SKILL.md) |
 | `oracle-prompt-design` | Design high-signal prompts and attachment plans for Oracle second-model review. Use when the user asks how to prompt Oracle, what files to send to Oracle, whether an Oracle run is worth doing, or wants a ready-to-run Oracle command for code review, debugging, design critique, refactoring, research validation, or claim checking. | [SKILL.md](https://github.com/koki3141/codex-global-skills/blob/main/oracle-prompt-design/SKILL.md) |
 | `oracle-review-loop` | This skill should be used when running Oracle creator/evaluator review loops with fixed chat threads, a user-approved 100-point rubric, and repeated improvement until PASS. | [SKILL.md](https://github.com/koki3141/codex-global-skills/blob/main/oracle-review-loop/SKILL.md) |
 | `orchestrator` | このskillは、ユーザーが明示的にOrchestratorを指定した場合、またはCodex標準subagentだけでは満たせないcross-provider、background、durable、resume可能な複数エージェント実行が必要な場合に使う。通常のコーディング、同一Codex内の並列調査、通常のコードレビューには使わない。 | [SKILL.md](https://github.com/koki3141/codex-global-skills/blob/main/orchestrator/SKILL.md) |

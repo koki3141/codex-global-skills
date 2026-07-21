@@ -1,6 +1,6 @@
 ---
 name: oracle
-description: "This skill should be used when running Oracle second-model reviews with bundled prompts and files, including browser-mode diagnosis, debugging, refactoring, and design checks."
+description: "This skill should be used when running Oracle second-model reviews with bundled prompts and files, diagnosing browser mode, or sending an explicitly authorized message to a specific ChatGPT chat or Project URL."
 ---
 
 # Oracle (CLI) — best use
@@ -36,7 +36,7 @@ If `oracle` is not on `PATH`, use the absolute path:
 $HOME/Library/pnpm/oracle --version
 ```
 
-Expected version: `0.15.0` or newer. Use the same binary for dry-run and the real run. Do not fall back to `npx -y @steipete/oracle` just because `oracle` is missing from `PATH`; `npx` can resolve an older package version and change browser/login/model-picker behavior.
+Expected version: `0.16.0` or newer. Use the same binary for dry-run and the real run. Do not fall back to `npx -y @steipete/oracle` just because `oracle` is missing from `PATH`; `npx` can resolve an older package version and change browser/login/model-picker behavior.
 
 Known-good browser invocation:
 
@@ -76,7 +76,88 @@ After this error class is observed, keep `--browser-manual-login --browser-input
 oracle --engine browser --browser-manual-login --browser-input-timeout 120000 --model gpt-5.5-pro --timeout 60m --wait --no-notify --slug "<slug>" -p "<task>" --file "<context-file-or-glob>"
 ```
 
-On Oracle 0.15.0 these manual-login flags are accepted even when they are not shown in the normal `--help --verbose` option list.
+These manual-login flags were accepted on Oracle 0.15.0 and remain parse-verified on the locally installed Oracle 0.16.0 even though they are not shown in the normal `--help --verbose` option list.
+
+## Send a message to a specific ChatGPT chat
+
+Use this path when the user explicitly asks Oracle to send an exact message to an existing ChatGPT conversation URL. Treat sending as an external side effect: require the user to supply or confirm both the target URL and message text before running it.
+
+Use `--chatgpt-url` to launch the persistent Oracle Chrome profile directly at the conversation. This form was execution-verified on Oracle 0.15.0 and dry-run parse-verified on Oracle 0.16.0:
+
+```bash
+oracle \
+  --engine browser \
+  --chatgpt-url "https://chatgpt.com/c/<conversation-id>" \
+  --browser-model-strategy current \
+  --browser-attachments never \
+  --browser-archive never \
+  --browser-manual-login \
+  --browser-input-timeout 120000 \
+  --browser-keep-browser \
+  --prompt "<exact-message>" \
+  --slug "<3-5-word-slug>" \
+  --timeout 10m \
+  --wait \
+  --no-notify
+```
+
+For a literal short message such as `HI!`, omit `--file` intentionally: attaching a context file would change the submitted message. This is a narrow exception to the context-file rule and does not apply to reviews, questions, follow-ups, or any task whose answer depends on external context.
+
+Do not substitute `--browser-tab <url>` unless Oracle is already attached to a Chrome DevTools endpoint containing that live ChatGPT tab. Without that setup it fails before submission with:
+
+```text
+No live ChatGPT tabs found on the configured Chrome DevTools endpoint.
+```
+
+After that error, do not retry the same command. Switch to `--chatgpt-url` with the persistent Oracle profile. A successful run exits `0` and prints the assistant's reply under `Answer:`, which confirms that ChatGPT received the message. Keep `--browser-keep-browser` only when the user wants the Oracle Chrome window left open.
+
+### ChatGPT Project URL
+
+Oracle can open a ChatGPT Project and create a chat inside it by passing the Project landing URL directly. This was execution-verified on Oracle 0.15.0, and Oracle 0.16.0 still exposes the required `--chatgpt-url` option:
+
+```bash
+oracle \
+  --engine browser \
+  --chatgpt-url "https://chatgpt.com/g/g-p-<project-slug>/project" \
+  --browser-model-strategy current \
+  --browser-attachments never \
+  --browser-archive never \
+  --browser-manual-login \
+  --browser-input-timeout 120000 \
+  --browser-keep-browser \
+  --prompt "<exact-message>" \
+  --slug "<3-5-word-slug>" \
+  --timeout 10m \
+  --wait \
+  --no-notify
+```
+
+The Oracle Chrome profile must be signed into an account that can access the Project. Project instructions and Project sources are supplied by ChatGPT itself; `--file` is still required when the task depends on local context that is not already in the Project.
+
+Project UI state can advance before Oracle captures a reply. In the verified run, the message appeared in the Project and `promptSubmitted` became `true`, while the running metadata still had the Project landing URL as `tabUrl` and `conversationId: null`. Do not promise an immediately recoverable chat ID from a Project run. Wait for completion and inspect `meta.json`; if the URL is still the Project landing page, preserve the Oracle Chrome window and obtain the created chat URL from the visible Project UI instead of guessing it.
+
+### New chat, conversation ID, and repeated messages
+
+To create a new chat, use the command above with `--chatgpt-url "https://chatgpt.com/"` and a unique slug. The conversation ID exists only after the first prompt is submitted and ChatGPT changes the page URL to `/c/<conversation-id>`. A completed Oracle session stores both values in its metadata:
+
+```bash
+jq -r '.browser.runtime.conversationId // empty' ~/.oracle/sessions/<slug>/meta.json
+jq -r '.browser.runtime.tabUrl // empty' ~/.oracle/sessions/<slug>/meta.json
+```
+
+During a running or interrupted session, `tabUrl` may already contain `/c/<conversation-id>` while the separate `conversationId` field is still `null`. Treat `tabUrl` as the canonical recovery value in that state.
+
+Use the captured `tabUrl` as `--chatgpt-url` in a later Oracle run to send another message to the same chat. If all follow-up messages are known before starting, prefer repeated `--browser-follow-up "<message>"` options in one Oracle invocation; this keeps the turns in one browser run and avoids launching a new controller for every message.
+
+Expect browser messaging to take tens of seconds and sometimes several minutes. A later run against an existing chat still launches browser control, submits the prompt, and waits for ChatGPT's response detector. These are distinct states:
+
+- `.browser.runtime.promptSubmitted: true`: the message was sent.
+- session `status: running`: Oracle is still waiting to capture the reply.
+- exit `0` plus `Answer:`: reply capture completed.
+
+Do not resend just because reply capture is slow; that can duplicate the message. Inspect `meta.json` first. In the verified two-run test, the first new-chat turn completed in about 29 seconds, while the second turn had `promptSubmitted: true` but remained in response detection for multiple minutes. Treat those timings as observations, not guarantees.
+
+If reply capture matters, keep the Oracle-controlled Chrome window open until the command finishes. Closing it after `promptSubmitted: true` can leave the message sent but the Oracle session waiting for reattachment without a captured `Answer:`.
 
 ## Golden path (fast + reliable)
 
