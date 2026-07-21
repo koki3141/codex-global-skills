@@ -1,6 +1,6 @@
 ---
 title: ChatGPT Global Skill Index
-date: 2026-07-22
+date: 2026-07-21
 tags:
   - status/evergreen
   - type/index
